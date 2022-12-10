@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
 class Process
 {
 public:
@@ -9,18 +8,18 @@ public:
     int arrival_time;
     int burst_time;
 
-    int start_time;     //first time cpu alloted time
+    int start_time; // first time cpu alloted time
     int completion_time;
     int turnaround_time;
     int waiting_time;
     int response_time;
 };
 
-int main(){
+int main()
+{
     int n;
     cout << "Enter number of processes:";
     cin >> n;
-
     Process p[n];
 
     bool is_completed[n] = {false};
@@ -29,8 +28,7 @@ int main(){
     int total_waiting_time = 0;
     int total_response_time = 0;
 
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++){
         cout << "Enter arrival time of process " << i + 1 << ": ";
         cin >> p[i].arrival_time;
         cout << "Enter burst time of process " << i + 1 << ": ";
@@ -42,28 +40,26 @@ int main(){
 
     int current_time = 0;
     int completed = 0;
-    while (completed!=n)
-    {
+    while (completed != n){
         int curr_process = -1;
-        int minimum = INT_MAX;
+        int minimum_burst_time = INT_MAX;
 
-        for (int i = 0; i < n; i++)
-        {
-            if(p[i].arrival_time  <= current_time && is_completed[i] == false){
-                if(p[i].burst_time < minimum){
-                    minimum = p[i].burst_time;
+        for (int i = 0; i < n; i++){
+            if (p[i].arrival_time <= current_time && is_completed[i] == false){
+                if (p[i].burst_time < minimum_burst_time){
+                    minimum_burst_time = p[i].burst_time;
                     curr_process = i;
                 }
-                if(p[i].burst_time == minimum){
-                    if(p[i].arrival_time < p[curr_process].arrival_time){
-                        minimum = p[i].burst_time;
+                if (p[i].burst_time == minimum_burst_time){
+                    if (p[i].arrival_time < p[curr_process].arrival_time){
+                        minimum_burst_time = p[i].burst_time;
                         curr_process = i;
-
                     }
                 }
             }
         }
-        if(curr_process != -1){
+
+        if (curr_process != -1){
 
             p[curr_process].start_time = current_time;
 
@@ -79,24 +75,20 @@ int main(){
             completed++;
             is_completed[curr_process] = true;
             current_time = p[curr_process].completion_time;
-            
         }else{
             current_time++;
         }
-        
     }
 
     cout << "#P\t"<< "AT\t"<< "BT\t"<< "ST\t"<< "CT\t"<< "TAT\t"<< "WT\t"<< "RT\t"<< "\n"<< endl;
 
-    for (int i = 0; i < n; i++)
-    {
-        cout << p[i].p_id << "\t" << p[i].arrival_time << "\t" << p[i].burst_time << "\t" << p[i].start_time << "\t" << p[i].completion_time << "\t" << p[i].turnaround_time << "\t" << p[i].waiting_time << "\t" << p[i].response_time << "\t"<< "\n"<< endl;
+    for (int i = 0; i < n; i++){
+        cout << p[i].p_id << "\t" << p[i].arrival_time << "\t" << p[i].burst_time << "\t" << p[i].start_time << "\t" << p[i].completion_time << "\t" << p[i].turnaround_time << "\t" << p[i].waiting_time << "\t" << p[i].response_time << "\t"
+             << "\n"
+             << endl;
     }
 
     cout << "Average Turnaround Time: " << (float)total_turnaround_time / n << endl;
     cout << "Average Waiting Time: " << (float)total_waiting_time / n << endl;
     cout << "Average Response Time: " << (float)total_response_time / n << endl;
-
-    
-
 }
