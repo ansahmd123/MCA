@@ -1,4 +1,4 @@
- <bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 class Process
@@ -21,6 +21,7 @@ int main()
     bool is_completed[n] = {false};
     bool is_visited[n] = {false};
 
+    queue<int> ready_queue;
     queue<int> running_queue;
 
     for (int i = 0; i < n; i++)
@@ -40,31 +41,36 @@ int main()
 
     while (completed != n)
     {
-
+        while (ready_queue.empty())
+        {
             for (int i = 0; i < n; i++)
             {
-                if(curr_process == i)   continue;
+                if (curr_process == i)
+                    continue;
 
                 if (p[i].at <= current_time && is_completed[i] == false)
                 {
-                    running_queue.push(i);
-                    // curr_process = running_queue.front();
+                    ready_queue.push(i);
                 }
             }
+        }
+
+        running_queue.push(ready_queue.front());
+
+        ready_queue.pop();
 
         curr_process = running_queue.front();
 
         cout << "current process=" << curr_process << endl;
+        
         if (curr_process != -1)
         {
             if (p[curr_process].rbt == p[curr_process].bt)
             {
-                p[curr_process].st = current_time;
-                // p[curr_process].st = max(current_time, p[curr_process].at);
+                // p[curr_process].st = current_time;
+                p[curr_process].st = max(current_time, p[curr_process].at);
                 current_time = current_time + tq;
                 p[curr_process].rbt = p[curr_process].rbt - tq;
-                // running_queue.pop();
-                // running_queue.push(running_queue.front());
                 running_queue.pop();
             }
 
@@ -121,4 +127,3 @@ int main()
 
     return 0;
 }
-

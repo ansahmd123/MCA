@@ -25,7 +25,6 @@ int main()
     Process p[n];
 
     bool is_completed[n] = {false};
-    bool is_in_queue[n] = {false};
 
     int total_turnaround_time = 0;
     int total_waiting_time = 0;
