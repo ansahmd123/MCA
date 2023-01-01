@@ -80,6 +80,9 @@ int main()
 
         if(!running_queue.empty())
             curr_process = running_queue.front();
+        else
+            curr_process = -1;
+
 
         if (curr_process != -1)
         {
@@ -141,7 +144,7 @@ int main()
     }
 
     cout<<endl;
-    cout<<"<------Round Robin CPU Scheduling Algorithm------\n>"<<endl;
+    cout<<"------Round Robin CPU Scheduling Algorithm------\n"<<endl;
 
     cout << "#P\t"<< "AT\t"<< "BT\t"<< "ST\t"<< "CT\t"<< "TAT\t"<< "WT\t"<< "RT\t"<< "\n"<< endl;
 
