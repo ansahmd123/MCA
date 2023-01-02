@@ -86,9 +86,10 @@ int main()
 
         if (curr_process != -1)
         {
-            if (p[curr_process].rbt == p[curr_process].bt)
+            if (p[curr_process].rbt == p[curr_process].bt || p[curr_process].rbt <= tq)
             {
-                p[curr_process].st = current_time;
+                if(p[curr_process].rbt == p[curr_process].bt)
+                    p[curr_process].st = current_time;
 
                 if (p[curr_process].rbt <= tq)
                 {
@@ -112,22 +113,6 @@ int main()
                     current_time = current_time + tq; 
                     running_queue.pop_front();
                 }
-            }
-
-            else if (p[curr_process].rbt <= tq)
-            {
-                current_time = current_time + p[curr_process].rbt;
-                p[curr_process].ct = current_time;
-                p[curr_process].tat = p[curr_process].ct - p[curr_process].at;
-                p[curr_process].wt = p[curr_process].tat - p[curr_process].bt;
-                p[curr_process].rt = p[curr_process].st - p[curr_process].at;
-
-                total_tat = total_tat + p[curr_process].tat;
-                total_wt = total_wt + p[curr_process].wt;
-                total_rt = total_rt + p[curr_process].rt;
-                running_queue.pop_front();
-                is_completed[curr_process] = true;
-                completed++;
             }
             else
             {
